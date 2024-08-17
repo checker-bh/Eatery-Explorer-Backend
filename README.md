@@ -8,6 +8,9 @@ adasdasdadadasdasda
 foooor the merge checking
 # Eatery Explorer
 
+## website descriptuion :
+the Eater Explorer is a website where users can find various restaurants with various cuisines , and the could view their informations , beside being able to comment on the restaurant to leave a review for other users , "perhaps we will implement add to favourites for users so they could have their own favourite restaurants and maybe we will implement another favourite to be for the foods , also if we had time we will try o implement rating system to count the averegee of users rating for restaurant".
+
 ## user stories :
 
 * as a user i should be able to sign up and sign in .
