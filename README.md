@@ -1,7 +1,9 @@
-this will be fixed 
-fewfewfwefwef
+# Eatery Explorer
 
-wakaka
-adasdasdadadasdasda 
+## user stories :
 
-foooor the merge checking
+* as a user i should be able to sign up and sign in 
+* as a user i should be able to view the restaurants in the website 
+* as a user i should be able to view restaurants menu / foods 
+* as a user i should be to create a restaurant and should be the only one capable of adding foods to the restaurant menu , (being a user and owner of the restaurant)
+* as a user i should be to edit the menu of my restaurant / edit the restaurant or delete 
