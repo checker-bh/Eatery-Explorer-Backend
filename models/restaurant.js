@@ -16,6 +16,30 @@ const commentSchema = new mongoose.Schema(
  // { timestamps: true }
 );
 
+const foodSchema = new mongoose.Schema(
+  {
+  name: {
+      type: String,
+      required: true
+    },
+
+  price: {
+    type: Number
+  },
+  description: {
+    type: String,
+    required: true
+  },
+
+  type:{
+    type: String,
+    required: true
+  }
+  
+  },
+ // { timestamps: true }
+);
+
 const restaurantsSchema = new mongoose.Schema(
   {
     name: {
@@ -37,10 +61,12 @@ const restaurantsSchema = new mongoose.Schema(
       // enum: ['italian', 'indian', 'persian', 'arabian', 'japanese', 'chinese', 'mexican', 'american', 'french', 'other'],
     },
     owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    comments: [commentSchema]
+    comments: [commentSchema],
+    menu:[foodSchema]
   },
   { timestamps: true }
 );
+
 
 const Restaurant = mongoose.model('ٌRestaurant', restaurantsSchema);
 

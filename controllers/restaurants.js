@@ -97,4 +97,74 @@ router.post("/:restaurantId/comments", async (req, res) => {
   }
 });
 
+//Food routes
+router.get("/:restaurantId/menu", async (req, res) => {
+  try {
+    const  restaurant= await Restaurant.findById(req.params.restaurantId);
+    res.status(200).json(restaurant.menu);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.post("/:restaurantId/menu", async (req, res) => {
+  try {
+    const  restaurant= await Restaurant.findById(req.params.restaurantId);
+    const newFood = await restaurant.menu.push(req.body);
+    restaurant.save();
+    const addedItem = restaurant.menu[restaurant.menu.length - 1];
+    res.status(200).json(addedItem);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.put("/:restaurantId/menu/:foodId", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+   
+    const foodIndex = restaurant.menu.findIndex(item => item._id.toString() === req.params.foodId);
+    if (foodIndex === -1) {
+      return res.status(404).json({ message: "Food item not found" });
+    }
+
+   
+    restaurant.menu[foodIndex] = { ...restaurant.menu[foodIndex]._doc, ...req.body };
+    await restaurant.save(); 
+
+   
+    res.status(200).json(restaurant.menu[foodIndex]);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+router.delete("/:restaurantId/menu/:foodId", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+   
+    const foodIndex = restaurant.menu.findIndex(item => item._id.toString() === req.params.foodId);
+    if (foodIndex === -1) {
+      return res.status(404).json({ message: "Food item not found" });
+    }
+
+   
+    const deletedItem = restaurant.menu.splice(foodIndex,1); 
+    restaurant.save();
+   
+    res.status(200).json(deletedItem);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+
 module.exports = router;

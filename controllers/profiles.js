@@ -16,12 +16,12 @@ router.get("/", async (req, res) => {
   }
 });
 
-router.get("/:userId", verifyToken, async (req, res) => {
+router.get("/:userId", verifyToken , async (req, res) => {
   try {
-    if (req.user.id !== req.params.userId) {
-      return res.status(401).json({ error: "access denied" });
-    }
-    const user = await User.findById(req.user.id);
+    // if (req.user.id !== req.params.userId) {
+    //   return res.status(401).json({ error: "access denied" });
+    // }
+    const user = await User.findById(req.params.userId);
     if (!user) {
       res.status(404);
       throw new Error("Profile not found.");
