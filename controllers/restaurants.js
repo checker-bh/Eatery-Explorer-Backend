@@ -318,4 +318,5 @@ router.delete(
   }
 );
 
+const mario = 10;
 module.exports = router;
