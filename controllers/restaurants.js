@@ -29,7 +29,7 @@ router.get("/:restaurantId", async (req, res) => {
 
 router.post("/", async (req, res) => {
   try {
-    //req.body.author = req.user.id;
+    req.body.owner = req.user.id;
     const restaurant = await Restaurant.create(req.body);
     // hoot._doc.author = req.user;
     res.status(201).json(restaurant);
