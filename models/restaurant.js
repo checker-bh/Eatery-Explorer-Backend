@@ -1,43 +1,58 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
-const commentSchema = new mongoose.Schema(
+const commentSchemaR = new mongoose.Schema(
   {
     text: {
       type: String,
-      required: true
-    },
-    author: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    authorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'User',
       required: true,
     },
-  },
- // { timestamps: true }
+    author: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    authorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  }
+  // { timestamps: true }
+);
+
+const commentSchemaF = new mongoose.Schema(
+  {
+    text: {
+      type: String,
+      required: true,
+    },
+    authorId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: true,
+    },
+  }
+  // { timestamps: true }
 );
 
 const foodSchema = new mongoose.Schema(
   {
-  name: {
+    name: {
       type: String,
-      required: true
+      required: true,
     },
 
-  price: {
-    type: Number
-  },
-  description: {
-    type: String,
-    required: true
-  },
+    price: {
+      type: Number,
+    },
+    description: {
+      type: String,
+      required: true,
+    },
 
-  type:{
-    type: String,
-    required: true
+    type: {
+      type: String,
+      required: true,
+    },
+    comments: [commentSchemaR],
   }
-  
-  },
- // { timestamps: true }
+  // { timestamps: true }
 );
 
 const restaurantsSchema = new mongoose.Schema(
@@ -53,21 +68,19 @@ const restaurantsSchema = new mongoose.Schema(
     location: {
       type: String,
       required: true,
-      
     },
     cuisine: {
       type: String,
       required: true,
       // enum: ['italian', 'indian', 'persian', 'arabian', 'japanese', 'chinese', 'mexican', 'american', 'french', 'other'],
     },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    comments: [commentSchema],
-    menu:[foodSchema]
+    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    comments: [commentSchemaR],
+    menu: [foodSchema],
   },
   { timestamps: true }
 );
 
-
-const Restaurant = mongoose.model('ٌRestaurant', restaurantsSchema);
+const Restaurant = mongoose.model("ٌRestaurant", restaurantsSchema);
 
 module.exports = Restaurant;
