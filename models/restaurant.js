@@ -15,7 +15,6 @@ const commentSchemaR = new mongoose.Schema(
   // { timestamps: true }
 );
 
-
 const foodSchema = new mongoose.Schema(
   {
     name: {
@@ -63,7 +62,7 @@ const restaurantsSchema = new mongoose.Schema(
       required: true,
       // enum: ['italian', 'indian', 'persian', 'arabian', 'japanese', 'chinese', 'mexican', 'american', 'french', 'other'],
     },
-    owner: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+    owner: { String },
     comments: [commentSchemaR],
     menu: [foodSchema],
   },
