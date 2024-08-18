@@ -80,7 +80,8 @@ router.delete("/:restaurantId", async (req, res) => {
 
 router.post("/:restaurantId/comments", async (req, res) => {
   try {
-    //req.body.author = req.user.id;
+    req.body.authorId = req.user.id;
+
     const restaurant = await Restaurant.findById(req.params.restaurantId);
     restaurant.comments.push(req.body);
     await restaurant.save();
@@ -161,6 +162,51 @@ router.delete("/:restaurantId/menu/:foodId", async (req, res) => {
     restaurant.save();
    
     res.status(200).json(deletedItem);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+//Comments Routes
+router.get("/:restaurantId/comments", async (req, res) => {
+  try {
+    const  restaurant= await Restaurant.findById(req.params.restaurantId);
+    res.status(200).json(restaurant.comments);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
+// router.post("/:restaurantId/comments", async (req, res) => {
+//   try {
+//     const  restaurant= await Restaurant.findById(req.params.restaurantId);
+//     const newComment = await restaurant.comments.push(req.body);
+//     restaurant.save();
+//     const addedComment = restaurant.comments[restaurant.comments.length - 1];
+//     res.status(200).json(addedComment);
+//   } catch (error) {
+//     res.status(500).json(error);
+//   }
+// });
+
+router.delete("/:restaurantId/comments/:commentId", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+   
+    const commentIndex = restaurant.comments.findIndex(item => item._id.toString() === req.params.commentId);
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment item not found" });
+    }
+
+   
+    const deletedComment = restaurant.comments.splice(commentIndex,1); 
+    restaurant.save();
+   
+    res.status(200).json(deletedComment);
   } catch (error) {
     res.status(500).json(error);
   }
