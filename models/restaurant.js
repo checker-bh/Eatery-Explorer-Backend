@@ -15,20 +15,6 @@ const commentSchemaR = new mongoose.Schema(
   // { timestamps: true }
 );
 
-const commentSchemaF = new mongoose.Schema(
-  {
-    text: {
-      type: String,
-      required: true,
-    },
-    authorId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      required: true,
-    },
-  }
-  // { timestamps: true }
-);
 
 const foodSchema = new mongoose.Schema(
   {
@@ -57,6 +43,10 @@ const foodSchema = new mongoose.Schema(
 const restaurantsSchema = new mongoose.Schema(
   {
     name: {
+      type: String,
+      required: true,
+    },
+    owner: {
       type: String,
       required: true,
     },
