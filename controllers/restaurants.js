@@ -80,7 +80,8 @@ router.delete("/:restaurantId", async (req, res) => {
 
 router.post("/:restaurantId/comments", async (req, res) => {
   try {
-    //req.body.author = req.user.id;
+    req.body.authorId = req.user.id;
+
     const restaurant = await Restaurant.findById(req.params.restaurantId);
     restaurant.comments.push(req.body);
     await restaurant.save();
@@ -208,6 +209,17 @@ router.get("/:restaurantId/menu/:foodId/comments", async (req, res) => {
     const foodComments = restaurant.menu[foodIndex].comments;
 
     res.status(200).json(foodComments);
+    
+    } catch (error) {
+    res.status(500).json(error);
+  }
+});
+=======
+//Comments Routes
+router.get("/:restaurantId/comments", async (req, res) => {
+  try {
+    const  restaurant= await Restaurant.findById(req.params.restaurantId);
+    res.status(200).json(restaurant.comments);
   } catch (error) {
     res.status(500).json(error);
   }
@@ -215,12 +227,13 @@ router.get("/:restaurantId/menu/:foodId/comments", async (req, res) => {
 
 router.post("/:restaurantId/menu/:foodId/comments", async (req, res) => {
   req.body.authorId = req.user.id;
+
   try {
     const restaurant = await Restaurant.findById(req.params.restaurantId);
     if (!restaurant) {
       return res.status(404).json({ message: "Restaurant not found" });
     }
-
+    
     const foodIndex = restaurant.menu.findIndex(
       (item) => item._id.toString() === req.params.foodId
     );
@@ -238,10 +251,29 @@ router.post("/:restaurantId/menu/:foodId/comments", async (req, res) => {
           restaurant.menu[foodIndex].comments.length - 1
         ]
       );
+
+ router.delete("/:restaurantId/comments/:commentId", async (req, res) => {
+   req.body.authorId = req.user.id;
+
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+    const commentIndex = restaurant.comments.findIndex(item => item._id.toString() === req.params.commentId);
+    if (commentIndex === -1) {
+      return res.status(404).json({ message: "Comment item not found" });
+    }
+
+    const deletedComment = restaurant.comments.splice(commentIndex,1); 
+    restaurant.save();
+   
+    res.status(200).json(deletedComment);
   } catch (error) {
     res.status(500).json(error);
   }
 });
+
 
 router.delete(
   "/:restaurantId/menu/:foodId/comments/:commentId",
@@ -282,5 +314,6 @@ router.delete(
     }
   }
 );
+
 
 module.exports = router;
