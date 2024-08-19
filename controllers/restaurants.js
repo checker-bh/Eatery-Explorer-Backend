@@ -338,6 +338,26 @@ router.get("/:ownerId/restaurants", async (req, res) => {
   }
 });
 
+
+router.get('/owners/:ownerId', async (req, res) => {
+  try {
+    const { ownerId } = req.params;
+    const owner = await User.findById(ownerId); // Adjust according to your model
+    if (!owner) {
+      return res.status(404).json({ message: "Owner not found" });
+    }
+    res.status(200).json(owner);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error });
+  }
+});
+
+
+
+
+
+
+
 //
 const mario = 10;
 module.exports = router;
