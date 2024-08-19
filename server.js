@@ -3,8 +3,12 @@ const dotenv = require("dotenv");
 dotenv.config();
 const cors = require("cors");
 const express = require("express");
+const morgan = require("morgan");
+
 
 const app = express();
+app.use(morgan("dev"));
+
 const mongoose = require("mongoose");
 const testJWTRouter = require("./controllers/test-jwt");
 

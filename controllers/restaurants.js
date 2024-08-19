@@ -1,6 +1,8 @@
 const express = require("express");
 const verifyToken = require("../middleware/verify-token.js");
 const Restaurant = require("../models/restaurant.js");
+const User = require("../models/user.js");
+
 
 const router = express.Router();
 
@@ -80,7 +82,12 @@ router.delete("/:restaurantId", async (req, res) => {
 
 router.post("/:restaurantId/comments", async (req, res) => {
   try {
+ username = await User.findById(req.user.id)
+  req.body.authorName = username.username;
+   
     req.body.authorId = req.user.id;
+  
+
 
     const restaurant = await Restaurant.findById(req.params.restaurantId);
     restaurant.comments.push(req.body);
