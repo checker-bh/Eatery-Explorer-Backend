@@ -324,6 +324,20 @@ router.delete(
     }
   }
 );
+
+router.get("/:ownerId/restaurants", async (req, res) => {
+  try {
+    const { ownerId } = req.params;
+    const restaurants = await Restaurant.find({ owner: ownerId });
+    if (!restaurants || restaurants.length === 0) {
+      return res.status(404).json({ message: "No restaurants found for this owner" });
+    }
+    res.status(200).json(restaurants);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 //
 const mario = 10;
 module.exports = router;
