@@ -11,6 +11,9 @@ const commentSchemaR = new mongoose.Schema(
       ref: "User",
       required: true,
     },
+    authorName: {
+      type: String,
+    },
   }
   // { timestamps: true }
 );
