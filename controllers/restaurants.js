@@ -221,6 +221,28 @@ router.get("/:restaurantId/menu/:foodId/comments", async (req, res) => {
   }
 });
 
+router.get("/:restaurantId/menu/:foodId/", async (req, res) => {
+  try {
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (!restaurant) {
+      return res.status(404).json({ message: "Restaurant not found" });
+    }
+
+    const foodIndex = restaurant.menu.findIndex(
+      (item) => item._id.toString() === req.params.foodId
+    );
+    if (foodIndex === -1) {
+      return res.status(404).json({ message: "Food item not found" });
+    }
+
+    const foodIwant = restaurant.menu[foodIndex]
+
+    res.status(200).json(foodIwant);
+  } catch (error) {
+    res.status(500).json(error);
+  }
+});
+
 //Comments Routes
 router.get("/:restaurantId/comments", async (req, res) => {
   try {
