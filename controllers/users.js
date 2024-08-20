@@ -8,6 +8,7 @@ const User = require('../models/user');
 router.post('/signup', async (req, res) => {
   try {
     // Check if the username is already taken
+    console.log(req.body)
     const userInDatabase = await User.findOne({ username: req.body.username });
     if (userInDatabase) {
       return res.json({ error: 'Username already taken.' });
@@ -28,8 +29,8 @@ router.post('/signin', async (req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
     if (user && bcrypt.compareSync(req.body.password, user.hashedPassword)) {
-      const token = jwt.sign({ username: user.username, id: user._id }, process.env.JWT_SECRET);
-      res.status(200).json({ token });
+      const token = jwt.sign({ username: user.username, id: user._id, hello:"world" }, process.env.JWT_SECRET);
+      res.status(200).json({ token , user});
     } else {
       res.status(401).json({ error: 'Invalid username or password.' });
     }
