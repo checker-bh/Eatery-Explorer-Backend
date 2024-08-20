@@ -254,6 +254,8 @@ router.get("/:restaurantId/comments", async (req, res) => {
 });
 
 router.post("/:restaurantId/menu/:foodId/comments", async (req, res) => {
+  username = await User.findById(req.user.id)
+  req.body.authorName = username.username;
   req.body.authorId = req.user.id;
 
   try {
@@ -347,7 +349,7 @@ router.delete(
   }
 );
 
-router.get("/:ownerId/restaurants", async (req, res) => {
+router.get("/:ownerId", async (req, res) => {
   try {
     const { ownerId } = req.params;
     const restaurants = await Restaurant.find({ owner: ownerId });
