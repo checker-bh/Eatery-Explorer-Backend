@@ -351,7 +351,7 @@ router.delete(
 
 router.get("/:ownerId", async (req, res) => {
   try {
-    const { ownerId } = req.params;
+    const  ownerId  = req.params.ownerId;
     const restaurants = await Restaurant.find({ owner: ownerId });
     if (!restaurants || restaurants.length === 0) {
       return res.status(404).json({ message: "No restaurants found for this owner" });
