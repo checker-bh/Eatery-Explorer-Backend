@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
   try {
     req.body.owner = req.user.id;
     const restaurant = await Restaurant.create(req.body);
-    // hoot._doc.author = req.user;
+   
     res.status(201).json(restaurant);
   } catch (error) {
     console.log(error);
@@ -45,9 +45,7 @@ router.put("/:restaurantId", async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.restaurantId);
 
-    // if (!hoot.author.equals(req.user.id)) {
-    //   return res.status(403).send("You're not allowed to do that!");
-    // }
+ 
 
     const updatedrestaurant = await Restaurant.findByIdAndUpdate(
       req.params.restaurantId,
@@ -67,9 +65,7 @@ router.delete("/:restaurantId", async (req, res) => {
   try {
     const restaurant = await Restaurant.findById(req.params.restaurantId);
 
-    // if (!hoot.author.equals(req.user.id)) {
-    //   return res.status(403).send("You're not allowed to do that!");
-    // }
+  
 
     const deletedrestaurant = await Restaurant.findByIdAndDelete(
       req.params.restaurantId
