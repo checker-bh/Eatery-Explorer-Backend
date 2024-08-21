@@ -82,8 +82,8 @@ router.delete("/:restaurantId", async (req, res) => {
 
 router.post("/:restaurantId/comments", async (req, res) => {
   try {
- username = await User.findById(req.user.id)
-  req.body.authorName = username.username;
+    username = await User.findById(req.user.id)
+    req.body.authorName = username.username;
    
     req.body.authorId = req.user.id;
   
