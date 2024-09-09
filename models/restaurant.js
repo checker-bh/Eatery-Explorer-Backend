@@ -60,6 +60,7 @@ const restaurantsSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    like:[{type:mongoose.Schema.Types.ObjectId, ref:'User'}],
     cuisine: {
       type: String,
       required: true,

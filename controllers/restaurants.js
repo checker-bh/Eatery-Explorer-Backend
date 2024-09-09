@@ -9,7 +9,27 @@ const router = express.Router();
 // ========== Public Routes ===========
 
 // ========= Protected Routes =========
+
 router.use(verifyToken);
+
+router.put('/:restaurantId/like', async (req,res)=>{
+  
+  try {
+    
+    const restaurant = await Restaurant.findById(req.params.restaurantId);
+    if (restaurant.like.includes(req.user.id)){
+      restaurant.like.pop(req.user.id)
+      restaurant.save();
+    }else{
+      restaurant.like.push(req.user.id)
+      restaurant.save();
+    }
+    
+    res.status(200).json(restaurant);
+  } catch (error) {
+    res.status(500).json('x');
+  }
+})
 
 router.get("/", async (req, res) => {
   try {
@@ -372,12 +392,5 @@ router.get('/owners/:ownerId', async (req, res) => {
   }
 });
 
-
-
-
-
-
-
-//
 const mario = 10;
 module.exports = router;

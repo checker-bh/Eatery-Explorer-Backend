@@ -22,6 +22,7 @@ mongoose.connection.on("connected", () => {
   console.log(`Connected to MongoDB ${mongoose.connection.name}.`);
 });
 
+
 app.use(cors());
 app.use(express.json());
 
@@ -30,6 +31,8 @@ app.use("/test-jwt", testJWTRouter);
 app.use("/users", usersRouter);
 app.use("/profiles", profilesRouter);
 app.use("/restaurants", restaurantsRouter);
+// app.use('/restaurants', restaurantsRouter);
+
 
 app.listen(process.env.PORT, () => {
   console.log("The express app is ready!");
